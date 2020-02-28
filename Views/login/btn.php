@@ -1,0 +1,1 @@
+	<input type="submit" name="submit" value="INGRESAR" class="form-control btn btn-danger">

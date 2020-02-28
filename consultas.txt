@@ -1,0 +1,11 @@
+create table Pedido(
+idpedido INT AUTO_INCREMENT PRIMARY KEY,
+idusuario int not null,
+idmesa int not null,
+fechapedido timestamp not null,
+totalpedido int not null,
+INDEX(idusuario),
+INDEX(idmesa),
+FOREIGN key idusuario REFERENCES productos(idproducto),
+FOREIGN key idmesa REFERENCES mesa(idmesa)
+);
