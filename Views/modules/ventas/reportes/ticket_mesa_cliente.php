@@ -19,28 +19,30 @@
 								JOIN estados_productos EP ON ta.id_estado_producto = EP.id_estado_producto
 								WHERE ta.id_estado_producto = 1");
 
-	$detalles = "<table><tr><td colspan='2'>DESCRIPCIÓN</td><td></td><td class='precio'>PRECIO</td></tr>";
+	$detalles = "<table><tr><td>Cantidad</td><td>Precio Unit.</td><td>Concepto</td><td class='precio'>Monto</td></tr>";
 	$detalles .= "<tr><td colspan='4'>----------------------------------</td></tr>";
 	$total = 0;
 	foreach($rows as $r){
-		$detalles .= "<tr><td>".strip_tags($r['nombreproducto'])." <b>CANT: </b>".$r['cantidad']."<td>";
-		$detalles .= "<td>: </td>";
-		$detalles .= "<td class='precio'>".number_format($r['precio'], 0, ',', '.')."</td>";
+		$detalles .= "<tr><td>".$r['cantidad']."</td><td>".number_format($r['precio'], 0, ',', '.')."</td>";
+		$detalles .= "<td>".strip_tags($r['nombreproducto'])."</td>";
+		$detalles .= "<td class='precio'>Gs. ".number_format($r['precio_total_producto'], 0, ',', '.')."</td>";
 		$detalles .= "</tr>";
-		$total 	  += $r['precio'];
+		$total 	  += $r['precio_total_producto'];
 	}
 
 #CON FORMATO EN WINDOWS
 $salida = "<div id='encabezado'>
-Nombre de empresa
+Kyung Kyune
+Parrillada Coreana
+Otazu 1463 c/ Tte.Alcorta, 1604 Asuncion
 ==================================</div>
 Ticket Nro.: 001-001-256
-Fecha: ".date("d-m-Y H:i:s")."
+Fecha: ".date("d/m/Y H:i:s")."
 Cliente: Casual
 R.U.C/C.I.: 800XXXXX-X
 ----------------------------------$detalles";
 $salida .= "<tr><td colspan='4'>==================================</td></tr>
-<tr><td colspan='2'>TOTAL A PAGAR GS</td><td>: </td><td class='precio'>".number_format($total, 0, ',', '.')."</td></tr></table>";
+<tr><td colspan='2'>TOTAL :</td><td> </td><td class='precio'>Gs.".number_format($total, 0, ',', '.')."</td></tr></table>";
 
 echo nl2br($salida);
 
