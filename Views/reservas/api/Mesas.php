@@ -15,11 +15,11 @@ class Conexion{
     }
 }
 class Datos{
- //Realiza la consulta para saber que mesas estan disponibles
- public function getMesasDisponiblesParaReservar($fechaOpcion){
+  //Realiza la consulta para saber que mesas estan disponibles
+  public function getMesasDisponiblesParaReservar($fechaOpcion){
    $fecha = $fechaOpcion;
    //$fecha = date('Y-m-d');
-   $sql=Conexion::conectar()->prepare("SELECT b.idmesa,b.nombremesa FROM Mesa b RIGHT join reservas on reservas.idmesa = b.idmesa and reservas.diallegada = '".$fecha."'");
+   $sql=Conexion::conectar()->prepare("SELECT b.idmesa,b.nombremesa FROM Mesa b RIGHT join reservas on reservas.idmesa = b.idmesa and reservas.diallegada = "."'".$fecha['fechaOpcion']."'"." and reservas.horallegada BETWEEN '".$fecha['horallegada']."' and '".date("H:i",strtotime("-1 minute",strtotime($fecha['fechaOpcion']." ".$fecha['horasalida'].":00")))."'");
    $sql->execute();
    $mesasOcupadas = $sql->fetchAll();
    return $mesasOcupadas;
@@ -34,8 +34,8 @@ class Datos{
  }
 }
 
-if(isset($_GET['fechaOpcion'])){
-    $fechaOpcion = $_GET['fechaOpcion'];
+if(isset($_GET['fechaOpcion']) && isset($_GET['horallegada']) && isset($_GET['horasalida'])){
+    $fechaOpcion = array("horallegada"=>$_GET['horallegada'],"horasalida" => $_GET['horasalida'],"fechaOpcion"=>$_GET['fechaOpcion']);
     $controller = new MvcController();
     $controller->getMesasDisponiblesController($fechaOpcion);
 }

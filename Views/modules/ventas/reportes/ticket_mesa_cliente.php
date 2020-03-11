@@ -15,9 +15,7 @@
 	require_once '../../../../Model/conexion.php';
 	$conexion = Conexion::conectar();
 	$mesa = $_GET['mesa'];
-	$rows = $conexion->query("SELECT * FROM $mesa ta JOIN productos pro ON ta.idproducto = pro.idproducto
-								JOIN estados_productos EP ON ta.id_estado_producto = EP.id_estado_producto
-								WHERE ta.id_estado_producto = 1");
+	$rows = $conexion->query("SELECT * FROM $mesa ta JOIN productos pro ON ta.idproducto = pro.idproducto  where ta.id_estado_producto != 2");
 
 	$detalles = "<table><tr><td>Cantidad</td><td>Precio Unit.</td><td>Concepto</td><td class='precio'>Monto</td></tr>";
 	$detalles .= "<tr><td colspan='4'>----------------------------------</td></tr>";
@@ -48,7 +46,7 @@ echo nl2br($salida);
 
 
 $id_estado_producto = 2;
-$search = 1;
+$search = 0;
 $sql= $conexion->prepare("UPDATE $mesa SET 
                                   id_estado_producto = :id_estado_producto 
                           WHERE id_estado_producto = $search");

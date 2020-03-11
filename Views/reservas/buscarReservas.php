@@ -46,7 +46,7 @@ require_once 'Views/modules/ventas/conexion.php';
 	<td  class=" alert-danger" align="center"><?php echo $resultados->cantidadpersonas; ?></td>
 	<td  class=" alert-danger"><?php echo $resultados->telefono; ?></td>
 	<td  class=" alert-danger"><?php echo date("d-m-Y", strtotime($resultados->diallegada)) ; ?></td>
-	<td  class=" alert-danger" align="center"><?php echo $resultados->horallegada; ?></td>
+	<td  class=" alert-danger" align="center"><?php echo $resultados->horallegada." - ".date("H:i",strtotime($resultados->horasalida)); ?></td>
 	<td class=" alert-danger"><?php echo $resultados->observaciones; ?></td>
    <td  class=" alert-danger">&nbsp; &nbsp;
    <a href="index.php?action=editarReservas&idreserva=<?php echo $resultados->idreserva;?>"><i class="fa fa-edit btn btn-primary btn-sm "></i></a>
