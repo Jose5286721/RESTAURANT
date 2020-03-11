@@ -43,7 +43,7 @@ class MvcController {
 					<td align="center"> '.$row["idmesa"].'</td>
 					<td align="center">'.$row["telefono"].'</td> 
 				  <td align="center">'.date("d-m-Y", strtotime($row["diallegada"])).'</td>
-					<td align="center">'.$row["horallegada"].'</td>
+					<td align="center">'.date("H:i",strtotime($row["horallegada"]))." - ".date("H:i",strtotime($row["horasalida"])).'</td>
 					<td align="center">'.$row["observaciones"].'</td>		
 					<td align="center"><a href="index.php?action=editarReservas&idreserva='.$row["idreserva"].'"<i class="fa fa-edit btn btn-primary btn-sm"></i></a>&nbsp;&nbsp;&nbsp;
 					    <a href="index.php?action=reservas&idBorrar='.$row["idreserva"].'"<i class="fa fa-trash-o btn btn-danger btn-sm"></i></a>
@@ -56,6 +56,7 @@ class MvcController {
  	public function agregarReservaController(){
          	if(isset($_POST['agregar'])) {
 			$arrayAux = $_POST['numeromesa'];
+			$horas = $_POST['horas'];
 			$cantidadPersonas = $_POST['cantidadpersonas'];
 			$largoArray = sizeof($_POST['numeromesa']);
 			$arrayDePersonas = array();
@@ -85,7 +86,8 @@ class MvcController {
  				                     "cantidadpersonas"=>$arrayDePersonas[$contador],
  				                      "telefono"=>$_POST['telefono'],
  				                      "diallegada"=>$_POST['diallegada'],	              
- 				                      "horallegada"=>$_POST['horallegada'],	              
+									   "horallegada"=>$horas[0],	 
+									   "horasalida"=>$horas[1],            
 									   "observaciones"=>$_POST['observaciones'],
 									   "idmesa"=>$arrayAux[$contador] //$_POST['numeromesa']         
 									  );
@@ -169,10 +171,16 @@ class MvcController {
             </div>
             </div>
              <div class="row">
-                <div class="col-md-6"> 
+                <div class="col-md-3"> 
              <div class="form-group">
-              <label for="recipient-name" class="form-control-label">Hora de Reserva (22:00):</label>
-              <input type="text" class="form-control" id="recipient-name" name="horallegada" value="'.$respuesta['horallegada'].'">
+              <label for="recipient-name" class="form-control-label">Desde (22:00):</label>
+              <input type="time" class="form-control" id="recipient-name" name="horas[]" value="'.$respuesta['horallegada'].'">
+            </div>
+			</div>
+			<div class="col-md-3"> 
+             <div class="form-group">
+              <label for="recipient-name" class="form-control-label">Hasta (22:00):</label>
+              <input type="time" class="form-control" id="recipient-name" name="horas[]" value="'.$respuesta['horasalida'].'">
             </div>
             </div>
               <div class="col-md-6"> 
@@ -191,11 +199,13 @@ class MvcController {
 
     public function actualizarReservasController(){
     	if (isset($_POST['editar'])) {
+			$horas = $_POST['horas'];
     		$datosController=array('nombrecliente'=>$_POST['nombrecliente'],
     			                   'cantidadpersonas'=>$_POST['cantidadpersonas'],
     			                   'telefono'=>$_POST['telefono'],
     			                   'diallegada'=>date("Y-m-d", strtotime($_POST['diallegada'])),
-    			                   'horallegada'=>$_POST['horallegada'],
+								   'horallegada'=>$horas[0],
+								   'horasalida'=>$horas[1],
     			                   'observaciones'=>$_POST['observaciones'],
     			                   'idreserva'=>$_POST['idreserva']
     			);

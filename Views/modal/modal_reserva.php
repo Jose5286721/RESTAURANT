@@ -40,10 +40,16 @@
             </div>
             </div>
              <div class="row">
-                <div class="col-md-6"> 
-             <div class="form-group">
-              <label for="recipient-name" class="form-control-label">Hora de Reserva (22:00):</label>
-              <input type="time" class="form-control" id="recipient-name" name="horallegada" required="">
+              <div class="col-md-3"> 
+              <div class="form-group">
+              <label for="horallegada" class="form-control-label">Desde: (22:00):</label>
+              <input type="time" class="form-control" id="horallegada" name="horas[]" required="">
+            </div>
+            </div>
+            <div class="col-md-3"> 
+              <div class="form-group">
+              <label for="horasalida" class="form-control-label">Hasta: (22:00):</label>
+              <input type="time" class="form-control" id="horasalida" name="horas[]" required="">
             </div>
             </div>
               <div class="col-md-6"> 
@@ -59,7 +65,7 @@
               <label for="NroMesas" class="form-control-label">Numero de mesa :</label>
               <select class="form-control" id="NroMesas" name="numeromesa[]" multiple="multiple" required="">
                 <?php 
-                  $fecha = date('Y-m-d');
+                  $fecha = array("fechaOpcion"=>date('Y-m-d'),"horallegada"=>"00:00","horasalida"=>"00:00");
                   $mesa = new MvcController();
                   $mesa->getMesasDisponiblesController($fecha);
                 ?>
