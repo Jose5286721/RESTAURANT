@@ -10,7 +10,7 @@ class MesasController {
 
       $fecha = $_POST['fecha'];
       $usu = $_POST['usuario'];
-      $mesa = isset($_POST['mesa_adicion']) ? $_POST['mesa_adicion'] : $_POST['mesa'];
+      $mesa = $_POST['mesa'];
       $mesa_adicion = isset($_POST['mesa_adicion']) ? "mesa".$_POST['mesa_adicion']: 0;
       $tabla = "mesa".$mesa;
       if ($mesa_adicion) {
@@ -110,26 +110,7 @@ class MesasController {
       // }else{
       //   header('location:mesas');
       // }
-    }
-    if(isset($_POST['actualizarestadoproducto'])){
-      $this->actualizarEstadoProducto($_POST['actualizarestadoproducto'],$_POST['idproducto'],"mesa".$_POST['numerodemesa']);
-    }
-    if(isset($_POST['eliminaritem'])){
-      $idmesa = $_POST['eliminaritem'];
-      $numeroDeMesa = "mesa".$_POST['numerodemesa'];
-      $this->eliminarProducto($idmesa,$numeroDeMesa);
-    }
-
-    
-  }
-  public function actualizarEstadoProducto($estado,$idproducto,$numeroDeMesa){
-    $conexion = Conexion::conectar();
-    $conexion->exec("UPDATE $numeroDeMesa SET id_estado_producto=$estado WHERE idmesa = $idproducto");
-  }
-  public function eliminarProducto($idmesa,$numeroDeMesa){
-    echo "<script>console.log('Ya estoy comenzando a eliminar');</script>";
-    $conexion = Conexion::conectar();
-    $conexion->exec("DELETE FROM $numeroDeMesa WHERE idmesa = $idmesa");
+  	}
   }
 
   public function insertMesa($tabla, $idproducto, $usu, $fecha, $mesa, $cantidad_bebida, $precio_bebida, $precio_total_bebida){

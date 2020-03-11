@@ -213,7 +213,7 @@ class Paginas{
      
        else if($enlaces == "cambioReservas" ){
 
-			$module =  "Views/reservas/reservas.php";
+			$module =  "Views/reservas/Reservas.php";
 		
 		}	
 

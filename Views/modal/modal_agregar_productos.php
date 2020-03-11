@@ -309,7 +309,6 @@
 <?php 
 require 'Controller/mesasController/mesasController.php';
 $regis = new MesasController();
-//$regis->eliminarProducto();
 $regis->agregarMesasController();
 if(isset($_POST['cancelarMesas'])){
     $tabla = $_POST['tabla_cancelar'];

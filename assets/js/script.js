@@ -27,13 +27,11 @@ $('#tablaProductos').DataTable({
 });
 const fecha = document.getElementById('FechaReserva');
 const mesa = document.getElementById('NroMesas');
-const horallegada = document.getElementById('horallegada');
-const horasalida = document.getElementById('horasalida');
 fecha.addEventListener('change',(event)=>{
   event.preventDefault();
   var response;
   var request = new XMLHttpRequest();
-  request.open('GET',`http://localhost/RESTAURANT/Views/reservas/api/Mesas.php?fechaOpcion=${event.target.value}&horallegada=${horallegada.value}&horasalida=${horasalida.value}`,true);
+  request.open('GET','http://localhost/RESTAURANT/Views/reservas/api/Mesas.php?fechaOpcion='+event.target.value,true);
   request.onreadystatechange = (e)=>{
 	  if(request.readyState == 4){
 		  if(request.status == 200){
@@ -45,35 +43,3 @@ fecha.addEventListener('change',(event)=>{
   }
   request.send();
   });
-  document.getElementById('horallegada').addEventListener('change',(event)=>{
-	event.preventDefault();
-	var response;
-  	var request = new XMLHttpRequest();
-  	request.open('GET',`http://localhost/RESTAURANT/Views/reservas/api/Mesas.php?fechaOpcion=${fecha.value}&horallegada=${event.target.value}&horasalida=${horasalida.value}`,true);
-  	request.onreadystatechange = (e)=>{
-	  if(request.readyState == 4){
-		  if(request.status == 200){
-			  response = request.response;
-			  console.log(response);
-			  mesa.innerHTML = response;
-		  }
-	  }
-  	}
-  	request.send();
-});
-document.getElementById("horasalida").addEventListener('change',(event)=>{
-	event.preventDefault();
-	var response;
-  	var request = new XMLHttpRequest();
-  	request.open('GET',`http://localhost/RESTAURANT/Views/reservas/api/Mesas.php?fechaOpcion=${fecha.value}&horallegada=${horallegada.value}&horasalida=${event.target.value}`,true);
-  	request.onreadystatechange = (e)=>{
-	  if(request.readyState == 4){
-		  if(request.status == 200){
-			  response = request.response;
-			  console.log(response);
-			  mesa.innerHTML = response;
-		  }
-	  }
-  	}
-  	request.send();
-});

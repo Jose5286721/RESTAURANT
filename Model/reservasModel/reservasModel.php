@@ -15,15 +15,14 @@ require_once 'Model/conexion.php';
 
  	 // agregar Reservas
  	 public function agregarReservasModel($datosModel,$tabla){
-         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombrecliente,idmesa,cantidadpersonas,telefono,diallegada,horallegada,horasalida,observaciones)
- 	 	  	VALUES(:nombrecliente,:idmesa,:cantidadpersonas,:telefono,:diallegada,:horallegada,:horasalida,:observaciones)");
+         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombrecliente,idmesa,cantidadpersonas,telefono,diallegada,horallegada,observaciones)
+ 	 	  	VALUES(:nombrecliente,:idmesa,:cantidadpersonas,:telefono,:diallegada,:horallegada,:observaciones)");
 
             $stmt->bindParam(':nombrecliente',$datosModel['nombrecliente'], PDO::PARAM_STR);
             $stmt->bindParam(':cantidadpersonas',$datosModel['cantidadpersonas'],PDO::PARAM_STR);
             $stmt->bindParam(':telefono',$datosModel['telefono'], PDO::PARAM_STR);
             $stmt->bindParam(':diallegada',$datosModel['diallegada'], PDO::PARAM_STR);
             $stmt->bindParam(':horallegada',$datosModel['horallegada'], PDO::PARAM_STR);
-            $stmt->bindParam(':horasalida',$datosModel['horasalida'], PDO::PARAM_STR);
             $stmt->bindParam(':observaciones',$datosModel['observaciones'], PDO::PARAM_STR);
             $stmt->bindParam(':idmesa',$datosModel['idmesa'], PDO::PARAM_INT);
 
@@ -69,16 +68,15 @@ require_once 'Model/conexion.php';
         $sql->close();
      } 
 
-      function actualizarReservasModel($datosModel,$tabla){
-         $sql=Conexion::conectar()->prepare("UPDATE $tabla SET nombrecliente = :nombrecliente,
-         cantidadpersonas = :cantidadpersonas, telefono=:telefono,diallegada=:diallegada,horallegada=:horallegada,horasalida=:horasalida,observaciones=:observaciones WHERE idreserva = :idreserva");
+         function actualizarReservasModel($datosModel,$tabla){
+      $sql=Conexion::conectar()->prepare("UPDATE $tabla SET nombrecliente = :nombrecliente,
+       cantidadpersonas = :cantidadpersonas, telefono=:telefono,diallegada=:diallegada,horallegada=:horallegada,observaciones=:observaciones WHERE idreserva = :idreserva");
 
       $sql->bindParam(':nombrecliente',$datosModel['nombrecliente'], PDO::PARAM_STR);
       $sql->bindParam(':cantidadpersonas',$datosModel['cantidadpersonas'], PDO::PARAM_STR);
       $sql->bindParam(':telefono',$datosModel['telefono'], PDO::PARAM_STR);
       $sql->bindParam(':diallegada',$datosModel['diallegada'], PDO::PARAM_STR);
       $sql->bindParam(':horallegada',$datosModel['horallegada'], PDO::PARAM_STR);
-      $sql->bindParam(':horasalida',$datosModel['horasalida'], PDO::PARAM_STR);
       $sql->bindParam(':observaciones',$datosModel['observaciones'], PDO::PARAM_STR);
       $sql->bindParam(':idreserva',$datosModel['idreserva'], PDO::PARAM_STR);
            
@@ -96,7 +94,7 @@ require_once 'Model/conexion.php';
     public function getMesasDisponiblesParaReservar($fechaOpcion){
       $fecha = $fechaOpcion;
       //$fecha = date('Y-m-d');
-      $sql=Conexion::conectar()->prepare("SELECT b.idmesa,b.nombremesa FROM Mesa b RIGHT join reservas on reservas.idmesa = b.idmesa and reservas.diallegada = "."'".$fecha['fechaOpcion']."'"." and reservas.horallegada BETWEEN '".$fecha['horallegada']."' and '".$fecha['horasalida']."'");
+      $sql=Conexion::conectar()->prepare("SELECT b.idmesa,b.nombremesa FROM Mesa b RIGHT join reservas on reservas.idmesa = b.idmesa and reservas.diallegada = '".$fecha."'");
       $sql->execute();
       $mesasOcupadas = $sql->fetchAll();
       return $mesasOcupadas;
